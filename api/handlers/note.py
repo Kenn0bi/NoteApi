@@ -24,7 +24,8 @@ def get_notes():
     # TODO: авторизованный пользователь получает только свои заметки и публичные заметки других пользователей
     user = multi_auth.current_user()
     notes = NoteModel.query.all()
-    return notes_schema.dump(notes), 200
+    # return notes_schema.dump(notes), 200
+    return note_schema.dump(notes[0]), 200
 
 
 @app.route("/notes", methods=["POST"])
