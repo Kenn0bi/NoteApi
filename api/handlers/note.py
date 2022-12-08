@@ -3,6 +3,7 @@ from api.models.note import NoteModel
 from api.models.user import UserModel
 from api.schemas.note import note_schema, notes_schema
 from utility.helpers import get_object_or_404
+from flask import jsonify
 
 
 @app.route("/notes/<int:note_id>", methods=["GET"])
@@ -14,7 +15,6 @@ def get_note_by_id(note_id):
     note = NoteModel.query.join(NoteModel.author).filter(UserModel.id==user.id).filter(NoteModel.id==note_id).first()
     if note is None:
         return "", 404
-    # note = get_object_or_404(NoteModel, note_id)
     return note_schema.dump(note), 200
 
 
@@ -23,9 +23,8 @@ def get_note_by_id(note_id):
 def get_notes():
     # TODO: авторизованный пользователь получает только свои заметки и публичные заметки других пользователей
     user = multi_auth.current_user()
-    notes = NoteModel.query.all()
-    # return notes_schema.dump(notes), 200
-    return note_schema.dump(notes[0]), 200
+    notes = NoteModel.query.join(NoteModel.author).filter(UserModel.id==user.id).all()
+    return jsonify(notes_schema.dump(notes)), 200
 
 
 @app.route("/notes", methods=["POST"])
@@ -43,8 +42,10 @@ def create_note():
 def edit_note(note_id):
     # TODO: Пользователь может редактировать ТОЛЬКО свои заметки.
     #  Попытка редактировать чужую заметку, возвращает ответ с кодом 403
-    author = multi_auth.current_user()
-    note = get_object_or_404(NoteModel, note_id)
+    user = multi_auth.current_user()
+    note = NoteModel.query.join(NoteModel.author).filter(UserModel.id == user.id).filter(NoteModel.id == note_id).first()
+    if note is None:
+        return '', 404
     note_data = request.json
     note.text = note_data["text"]
     note.private = note_data.get("private") or note.private
@@ -54,7 +55,12 @@ def edit_note(note_id):
 
 @app.route("/notes/<int:note_id>", methods=["DELETE"])
 @multi_auth.login_required
-def delete_note(self, note_id):
+def delete_note(note_id):
     # TODO: Пользователь может удалять ТОЛЬКО свои заметки.
     #  Попытка удалить чужую заметку, возвращает ответ с кодом 403
-    raise NotImplemented("Метод не реализован")
+    user = multi_auth.current_user()
+    note = NoteModel.query.join(NoteModel.author).filter(UserModel.id == user.id).filter(NoteModel.id == note_id).first()
+    if note is None:
+        return '', 404
+    note.delete()
+    return '', 200
