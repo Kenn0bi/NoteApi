@@ -1,0 +1,66 @@
+{
+    "user_model": [
+        {
+            "id": 1,
+            "username": "admin",
+            "password_hash": "$6$rounds=656000$/WMAC.nHtLbkadBs$YUvfUf5GonPz2MKPZnTqEGeQfRfE1SY94.axFKFKlTkt01pFZJ4sLcg6GlcROGM2yq0TGRUbGy2ZMIB/areDd.",
+            "role": "admin"
+        },
+        {
+            "id": 3,
+            "username": "user",
+            "password_hash": "$6$rounds=656000$NjmYgulcMYgygcfk$LGC/nR5k1jV44rVyYn/XEO.YWvl2kpGrZNKtztQnZ9Jq5p8CKRVUtOaDtRUzdc8CZ0JRG6ZzzYi2Df.b0VRcp/",
+            "role": "simple_user"
+        }
+    ],
+    "note_model": [
+        {
+            "id": 1,
+            "author_id": 1,
+            "text": "One more quote ...",
+            "private": true
+        },
+        {
+            "id": 2,
+            "author_id": 1,
+            "text": "One more quote ...",
+            "private": true
+        },
+        {
+            "id": 3,
+            "author_id": 1,
+            "text": "New amazing quote",
+            "private": true
+        },
+        {
+            "id": 4,
+            "author_id": 1,
+            "text": "Another more quote ...",
+            "private": true
+        },
+        {
+            "id": 9,
+            "author_id": 1,
+            "text": "Test quote ...",
+            "private": true
+        },
+        {
+            "id": 10,
+            "author_id": 1,
+            "text": "2New amazing quote",
+            "private": false
+        },
+        {
+            "id": 11,
+            "author_id": 1,
+            "text": "Admin public quote ...",
+            "private": false
+        },
+        {
+            "id": 12,
+            "author_id": 1,
+            "text": "Admin private quote ...",
+            "private": true
+        }
+    ]
+}

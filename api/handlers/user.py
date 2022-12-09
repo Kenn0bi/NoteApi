@@ -4,7 +4,7 @@ from api.schemas.user import user_schema, users_schema, UserSchema, UserRequestS
 from utility.helpers import get_object_or_404
 from flask import jsonify
 from flask_apispec import doc, marshal_with, use_kwargs
-
+from sqlalchemy.exc import IntegrityError
 
 @app.route("/users/<int:user_id>")
 @multi_auth.login_required
@@ -43,10 +43,11 @@ def get_users():
 def create_user(**kwargs):
     user = UserModel(**kwargs)
     # TODO: добавить обработчик на создание пользователя с неуникальным username
-    user.save()
-    if user.id:
-        return user, 201
-    abort(400, description=f"User must be unique")
+    try:
+        user.save()
+    except IntegrityError:
+        return "User must be unique", 400
+    return user, 201
 
 
 @app.route("/users/<int:user_id>", methods=["PUT"])

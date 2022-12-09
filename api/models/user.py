@@ -3,8 +3,6 @@ from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from itsdangerous import URLSafeSerializer, BadSignature
 
-from sqlalchemy.exc import IntegrityError
-
 
 class UserModel(db.Model):
     # __name = "User"
@@ -33,11 +31,9 @@ class UserModel(db.Model):
         return s.dumps({'id': self.id})
 
     def save(self):
-        try:
-            db.session.add(self)
-            db.session.commit()
-        except IntegrityError:  # Обработка ошибки "создание пользователя с НЕ уникальным именем"
-            db.session.rollback()
+        db.session.add(self)
+        db.session.commit()
+        db.session.rollback()
 
     def delete(self):
         db.session.delete(self)

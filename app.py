@@ -1,6 +1,6 @@
 from api import app, docs
 from config import Config
-from api.handlers import auth, note, user
+from api.handlers import auth, note, user, tag
 
 # CRUD
 
@@ -22,6 +22,11 @@ docs.register(note.get_notes)
 docs.register(note.create_note)
 docs.register(note.edit_note)
 docs.register(note.delete_note)
+
+# TAGS
+docs.register(tag.get_tag_by_id)
+docs.register(tag.get_tags)
+docs.register(tag.create_tag)
 
 if __name__ == '__main__':
     app.run(debug=Config.DEBUG, port=Config.PORT)

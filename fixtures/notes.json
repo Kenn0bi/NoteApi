@@ -1,0 +1,16 @@
+{
+    "note_model": [
+        {
+            "id": 13,
+            "author_id": 1,
+            "text": "Loaded 1 quote ...",
+            "private": true
+        },
+        {
+            "id": 14,
+            "author_id": 1,
+            "text": "Loaded 2 quote ...",
+            "private": false
+        }
+    ]
+}
