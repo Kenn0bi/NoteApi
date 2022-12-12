@@ -27,6 +27,7 @@ docs.register(note.delete_note)
 docs.register(tag.get_tag_by_id)
 docs.register(tag.get_tags)
 docs.register(tag.create_tag)
+docs.register(tag.note_add_tags)
 
 if __name__ == '__main__':
     app.run(debug=Config.DEBUG, port=Config.PORT)

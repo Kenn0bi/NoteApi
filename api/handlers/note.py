@@ -55,7 +55,7 @@ def create_note(**kwargs):
 
 @app.route("/notes/<int:note_id>", methods=["PUT"])
 @multi_auth.login_required
-@doc(summary="Edit note by id", description='Eit note by id for current auth User', tags=['Notes'])
+@doc(summary="Edit note by id", description='Edit note by id for current auth User', tags=['Notes'])
 @marshal_with(NoteSchema, code=200)
 @use_kwargs(NoteRequestSchema, location='json')
 @doc(responses={"401": {"description": "Unauthorized"}})

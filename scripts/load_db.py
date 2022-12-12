@@ -1,4 +1,5 @@
 import sys, os
+import click
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import json
@@ -9,9 +10,11 @@ from api.models.note import NoteModel
 from api.models.user import UserModel
 from sqlalchemy.exc import IntegrityError
 
-
-def load_db(path_to_db=Config.SQLALCHEMY_DATABASE_URI
-, file_name=BASE_DIR / "fixtures" / "notes.json"):
+@click.command
+@click.argument('file_name', default='notes.json')
+def load_db(file_name):
+   path_to_db = Config.SQLALCHEMY_DATABASE_URI
+   file_name = BASE_DIR / "fixtures" / file_name
    engine = create_engine(path_to_db)
    meta = MetaData(bind=engine)
    DBSession = sessionmaker(bind=engine)

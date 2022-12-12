@@ -7,11 +7,14 @@ from sqlalchemy import create_engine, MetaData
 from config import Config, BASE_DIR
 from api.models.note import NoteModel
 from api.models.user import UserModel
+from api.models.tag import TagModel
 
-# @click.command
-# @click.argument('db_file')
-def dump_db(path_to_db=Config.SQLALCHEMY_DATABASE_URI, models_only=None, file_name = BASE_DIR / "fixtures" / 'db_file.json'):
-
+@click.command
+@click.argument('file_name', default='data.json')
+def dump_db(file_name):
+   path_to_db = Config.SQLALCHEMY_DATABASE_URI
+   models_only=[UserModel, NoteModel, TagModel]
+   file_name = BASE_DIR / "fixtures" / file_name
    engine = create_engine(path_to_db)
    meta = MetaData()
    meta.reflect(bind=engine)
@@ -25,4 +28,4 @@ def dump_db(path_to_db=Config.SQLALCHEMY_DATABASE_URI, models_only=None, file_na
        json.dump(result, f, ensure_ascii=False, indent=4)
 
 
-dump_db(Config.SQLALCHEMY_DATABASE_URI, models_only=[UserModel, NoteModel])
+dump_db()
