@@ -1,4 +1,4 @@
-from api import app, request, multi_auth, abort
+from api import app, request, multi_auth, abort, db
 from api.models.tag import TagModel
 from api.models.note import NoteModel
 from api.schemas.tag import tag_schema, tags_schema, TagSchema, TagRequestSchema
@@ -48,7 +48,10 @@ def create_tag(**kwargs):
 @use_kwargs({"tags_id": fields.List(fields.Int())}, location=('json'))
 @doc(responses={"404": {"description": "Not found"}})
 def note_add_tags(note_id, **kwargs):
+    print(kwargs['tags_id'])
     note = get_object_or_404(NoteModel, note_id)
-    note.tags.append(kwargs['tags_id'])
+    for id in kwargs['tags_id']:
+        note.tags.append(TagModel.query.get(id))
     note.save()
+
     return note, 200
