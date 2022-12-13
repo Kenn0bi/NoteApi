@@ -25,9 +25,7 @@ def get_tag_by_id(tag_id):
 @marshal_with(TagSchema(many=True), code=200)
 def get_tags():
     tags = TagModel.query.all()
-    # return jsonify(tags_schema.dump(tags)), 200
-    return tags_schema.dump(tags), 200
-
+    return tags, 200
 
 @app.route("/tags", methods=["POST"])
 @doc(summary="Create new tag", description='Create new tag', tags=['Tags'])
@@ -51,7 +49,9 @@ def note_add_tags(note_id, **kwargs):
     print(kwargs['tags_id'])
     note = get_object_or_404(NoteModel, note_id)
     for id in kwargs['tags_id']:
-        note.tags.append(TagModel.query.get(id))
+        tag = get_object_or_404(TagModel, id)
+        note.tags.append(tag)
+        # db.session.commit()
     note.save()
 
     return note, 200

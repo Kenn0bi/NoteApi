@@ -1,4 +1,4 @@
-from api import db, abort
+from api import db
 from sqlalchemy.exc import IntegrityError
 
 class TagModel(db.Model):
@@ -7,9 +7,12 @@ class TagModel(db.Model):
    name = db.Column(db.String(255), unique=True, nullable=False)
 
    def save(self):
-      db.session.add(self)
-      db.session.commit()
-      db.session.rollback()
+      try:
+         db.session.add(self)
+         db.session.commit()
+      except IntegrityError as e:
+         db.session.rollback()
+         raise e
 
    def delete(self):
       db.session.delete(self)

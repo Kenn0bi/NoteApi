@@ -15,7 +15,7 @@ class NoteSchema(ma.SQLAlchemySchema):
     text = ma.auto_field()
     private = ma.auto_field()
     author = ma.Nested(UserSchema())
-    tags = ma.Nested(TagSchema())
+    tags = ma.Nested(TagSchema(many=True))
 
 # Десериализация запроса(request)
 class NoteRequestSchema(ma.SQLAlchemySchema):
@@ -27,3 +27,6 @@ class NoteRequestSchema(ma.SQLAlchemySchema):
 
 note_schema = NoteSchema()
 notes_schema = NoteSchema(many=True)
+
+
+

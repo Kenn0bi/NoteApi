@@ -2,6 +2,7 @@ from api import db, Config, ma
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from itsdangerous import URLSafeSerializer, BadSignature
+from sqlalchemy.exc import IntegrityError
 
 
 class UserModel(db.Model):
@@ -31,9 +32,12 @@ class UserModel(db.Model):
         return s.dumps({'id': self.id})
 
     def save(self):
-        db.session.add(self)
-        db.session.commit()
-        db.session.rollback()
+        try:
+            db.session.add(self)
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            raise e
 
     def delete(self):
         db.session.delete(self)

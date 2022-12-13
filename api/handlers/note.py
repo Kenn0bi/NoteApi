@@ -16,7 +16,7 @@ from flask_apispec import doc, marshal_with, use_kwargs
 @doc(responses={"403": {"description": "Forbidden"}})
 @doc(security=[{"basicAuth": []}])
 def get_note_by_id(note_id):
-    # TODO: авторизованный пользователь может получить только свою заметку или публичную заметку других пользователей
+    #  авторизованный пользователь может получить только свою заметку или публичную заметку других пользователей
     #  Попытка получить чужую приватную заметку, возвращает ответ с кодом 403
     user = multi_auth.current_user()
     note = get_object_or_404(NoteModel, note_id)
@@ -33,7 +33,7 @@ def get_note_by_id(note_id):
 @doc(responses={"401": {"description": "Unauthorized"}})
 @doc(security=[{"basicAuth": []}])
 def get_notes():
-    # TODO: авторизованный пользователь получает только свои заметки и публичные заметки других пользователей
+    # авторизованный пользователь получает только свои заметки и публичные заметки других пользователей
     user = multi_auth.current_user()
     notes = NoteModel.query.join(NoteModel.author).filter((UserModel.id==user.id) | (NoteModel.private==False))
     return notes, 200
@@ -63,16 +63,15 @@ def create_note(**kwargs):
 @doc(responses={"403": {"description": "Forbidden"}})
 @doc(security=[{"basicAuth": []}])
 def edit_note(note_id, **kwargs):
-    # TODO: Пользователь может редактировать ТОЛЬКО свои заметки.
+    #  Пользователь может редактировать ТОЛЬКО свои заметки.
     #  Попытка редактировать чужую заметку, возвращает ответ с кодом 403
     user = multi_auth.current_user()
     note = get_object_or_404(NoteModel, note_id)
-    notes = NoteModel.query.join(NoteModel.author).filter(UserModel.id == user.id)
-    if note in notes:
+    if note.author_id == user.id:
         for key in kwargs:
             setattr(note, key, kwargs[key])
-        note.save()
-        return note, 200
+            note.save()
+            return note, 200
     abort(403, description=f"Forbidden")
 
 @app.route("/notes/<int:note_id>", methods=["DELETE"])
@@ -83,12 +82,11 @@ def edit_note(note_id, **kwargs):
 @doc(responses={"403": {"description": "Forbidden"}})
 @doc(security=[{"basicAuth": []}])
 def delete_note(note_id):
-    # TODO: Пользователь может удалять ТОЛЬКО свои заметки.
+    #  Пользователь может удалять ТОЛЬКО свои заметки.
     #  Попытка удалить чужую заметку, возвращает ответ с кодом 403
     user = multi_auth.current_user()
     note = get_object_or_404(NoteModel, note_id)
-    notes = NoteModel.query.join(NoteModel.author).filter(UserModel.id == user.id)
-    if note in notes:
+    if note.author_id == user.id:
         note.delete()
-        return '', 200
+        return '', 204
     abort(403, description=f"Forbidden")
