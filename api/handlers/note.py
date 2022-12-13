@@ -90,3 +90,4 @@ def delete_note(note_id):
         note.delete()
         return '', 204
     abort(403, description=f"Forbidden")
+

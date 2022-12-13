@@ -1,6 +1,8 @@
 from api import app, request, multi_auth, abort
 from api.models.user import UserModel
-from api.schemas.user import user_schema, users_schema, UserSchema, UserRequestSchema, UserPUTRequestSchema
+from api.models.note import NoteModel
+from api.schemas.user import UserSchema, UserRequestSchema, UserPUTRequestSchema
+from api.schemas.note import NoteSchema
 from utility.helpers import get_object_or_404
 from flask import jsonify
 from flask_apispec import doc, marshal_with, use_kwargs
@@ -66,3 +68,12 @@ def delete_user(user_id):
     user = get_object_or_404(UserModel, user_id)
     user.delete()
     return '', 204
+
+
+@app.route("/users/<int:user_id>/notes/", methods=["GET"])
+@doc(summary="Get notes by user id", description='Get notes by user id', tags=['Users'])
+@doc(responses={"404": {"description": "Not found"}})
+@marshal_with(NoteSchema(many=True), code=200)
+def get_user_notes(user_id):
+    user = get_object_or_404(UserModel, user_id)
+    return user.notes, 200
