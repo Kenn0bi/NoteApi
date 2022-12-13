@@ -18,6 +18,8 @@ basic_auth = HTTPBasicAuth()
 token_auth = HTTPTokenAuth('Bearer')
 multi_auth = MultiAuth(basic_auth, token_auth)
 
+with app.app_context():
+   from commands import *
 
 @basic_auth.verify_password
 def verify_password(username, password):
