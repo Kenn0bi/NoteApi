@@ -2,79 +2,79 @@
     "tag": [
         {
             "id": 1,
-            "name": "pets"
+            "name": "tag-adm"
         },
         {
             "id": 2,
-            "name": "books"
+            "name": "tag-good"
         },
         {
             "id": 3,
-            "name": "fruits"
+            "name": "tag-public"
         }
     ],
     "user_model": [
         {
             "id": 1,
-            "username": "ADMIN",
-            "password_hash": "$6$rounds=656000$/WMAC.nHtLbkadBs$YUvfUf5GonPz2MKPZnTqEGeQfRfE1SY94.axFKFKlTkt01pFZJ4sLcg6GlcROGM2yq0TGRUbGy2ZMIB/areDd.",
+            "username": "admin",
+            "password_hash": "$6$rounds=656000$R0CCQvm3zH3oXuDc$kk/4.r3KTiW8wKUZAxLWkaK/wi8aFjzV5mffT31zZjuRDT/Cfco06ykVgJDoWKzPGBQAJpOb6bxQqOJXKABqf0",
             "role": "admin"
         },
         {
+            "id": 2,
+            "username": "Petr",
+            "password_hash": "$6$rounds=656000$vqO0WUQfTTOtJ0qo$BvDV6xegcoUeSJkL2QoMvhEpjTW2p0W7uTBrINHoOZ/MPC8hUsnBAsBo9zS8M.W/1z7Uzye8DOjPPjkeTrARY1",
+            "role": "simple_user"
+        },
+        {
             "id": 3,
-            "username": "user",
-            "password_hash": "$6$rounds=656000$NjmYgulcMYgygcfk$LGC/nR5k1jV44rVyYn/XEO.YWvl2kpGrZNKtztQnZ9Jq5p8CKRVUtOaDtRUzdc8CZ0JRG6ZzzYi2Df.b0VRcp/",
+            "username": "Ivan",
+            "password_hash": "$6$rounds=656000$2z6/5nunaUwgPGt9$oeP2RXBptuadD7porQL958GCADUOacN73fXqWAUQPN60lKgk58b9o68gHoIAud6r9rB87oYnOkUWzHSaxi7lM0",
             "role": "simple_user"
         }
     ],
     "note_model": [
         {
-            "id": 1,
+            "id": 7,
             "author_id": 1,
-            "text": "One more quote ...",
-            "private": true
+            "text": "Private note",
+            "private": true,
+            "deleted": false
         },
         {
-            "id": 2,
+            "id": 8,
             "author_id": 1,
-            "text": "Заметка за 13.12.2022",
-            "private": true
-        },
-        {
-            "id": 3,
-            "author_id": 1,
-            "text": "New amazing quote",
-            "private": true
-        },
-        {
-            "id": 4,
-            "author_id": 1,
-            "text": "Another more quote ...",
-            "private": true
+            "text": "Public note",
+            "private": false,
+            "deleted": false
         },
         {
             "id": 9,
-            "author_id": 1,
-            "text": "Test quote ...",
-            "private": true
+            "author_id": 2,
+            "text": "Private note",
+            "private": true,
+            "deleted": false
         },
         {
             "id": 10,
-            "author_id": 1,
-            "text": "2New amazing quote",
-            "private": false
+            "author_id": 2,
+            "text": "Public note",
+            "private": false,
+            "deleted": false
         },
         {
             "id": 11,
-            "author_id": 1,
-            "text": "Admin public quote ...",
-            "private": false
+            "author_id": 3,
+            "text": "Private note",
+            "private": true,
+            "deleted": false
         },
         {
             "id": 12,
-            "author_id": 1,
-            "text": "Admin private quote ...",
-            "private": true
+            "author_id": 3,
+            "text": "Public note",
+            "private": false,
+            "deleted": false
         }
     ]
 }

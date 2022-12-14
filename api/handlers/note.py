@@ -36,7 +36,7 @@ def get_note_by_id(note_id):
 def get_notes():
     # авторизованный пользователь получает только свои заметки и публичные заметки других пользователей
     user = multi_auth.current_user()
-    notes = NoteModel.query.join(NoteModel.author).filter((UserModel.id==user.id) | (NoteModel.private==False))
+    notes = NoteModel.query.join(NoteModel.author).filter(((UserModel.id==user.id) | (NoteModel.private==False)) & (NoteModel.deleted==False))
     return notes, 200
 
 
@@ -77,19 +77,38 @@ def edit_note(note_id, **kwargs):
 
 @app.route("/notes/<int:note_id>", methods=["DELETE"])
 @multi_auth.login_required
-@doc(summary="Delete note by id", description='Delete note by id for current auth User', tags=['Notes'])
+@doc(summary="Archive note by id", description='Archive note by id for current auth User', tags=['Notes'])
 @doc(responses={"401": {"description": "Unauthorized"}})
 @doc(responses={"404": {"description": "Not found"}})
 @doc(responses={"403": {"description": "Forbidden"}})
 @doc(security=[{"basicAuth": []}])
-def delete_note(note_id):
-    #  Пользователь может удалять ТОЛЬКО свои заметки.
-    #  Попытка удалить чужую заметку, возвращает ответ с кодом 403
+def archive_note(note_id):
+    #  Пользователь может архивировать ТОЛЬКО свои заметки.
     user = multi_auth.current_user()
     note = get_object_or_404(NoteModel, note_id)
     if note.author_id == user.id:
-        note.delete()
+        note.deleted = True
+        note.save()
         return '', 204
+    abort(403, description=f"Forbidden")
+
+
+@app.route("/notes/<int:note_id>/restore", methods=["PUT"])
+@multi_auth.login_required
+@marshal_with(NoteSchema, code=200)
+@doc(summary="Restore note by id from archive", description='Restore note by id from archive for current auth User', tags=['Notes'])
+@doc(responses={"401": {"description": "Unauthorized"}})
+@doc(responses={"404": {"description": "Not found"}})
+@doc(responses={"403": {"description": "Forbidden"}})
+@doc(security=[{"basicAuth": []}])
+def restore_note(note_id):
+    #  Пользователь может восстановить ТОЛЬКО свои заметки.
+    user = multi_auth.current_user()
+    note = NoteModel.query.get(note_id)
+    if note.author_id == user.id:
+        note.deleted = False
+        note.save()
+        return note, 200
     abort(403, description=f"Forbidden")
 
 
@@ -103,7 +122,8 @@ def delete_note(note_id):
 def get_user_notes_by_tag(**kwargs):
     # авторизованный пользователь получает только свои заметки с указанным тегом
     user = multi_auth.current_user()
-    notes = NoteModel.query.filter((NoteModel.author_id==user.id) & (NoteModel.tags.any(name=kwargs['tag']) ))
+    # notes = NoteModel.query.filter((NoteModel.author_id==user.id) & (NoteModel.tags.any(name=kwargs['tag']) ))
+    notes = NoteModel.query.filter((NoteModel.deleted==False) & (NoteModel.author_id==user.id) & (NoteModel.tags.any(name=kwargs['tag'])))
     return notes, 200
 
 
@@ -113,7 +133,7 @@ def get_user_notes_by_tag(**kwargs):
 @use_kwargs({"username": fields.Str()}, location=('query'))
 def get_user_public_notes(**kwargs):
     # получение публичных заметок пользователя с указанным именем
-    notes = NoteModel.query.join(NoteModel.author).filter((UserModel.username==kwargs['username']) & (NoteModel.private==False))
+    notes = NoteModel.query.join(NoteModel.author).filter((NoteModel.deleted==False) & (UserModel.username==kwargs['username']) & (NoteModel.private==False))
     return notes, 200
 
 @app.route("/notes/<int:note_id>/tags", methods=["PUT"])
@@ -126,6 +146,7 @@ def get_user_public_notes(**kwargs):
 @doc(security=[{"basicAuth": []}])
 def note_add_tags(note_id, **kwargs):
     user = multi_auth.current_user()
+    print(note_id)
     note = get_object_or_404(NoteModel, note_id)
     if note.author_id == user.id:
         for id in kwargs['tags']:
@@ -163,5 +184,20 @@ def note_delete_tags(note_id, **kwargs):
 @marshal_with(NoteSchema(many=True), code=200)
 def get_all_public_notes():
     # получение публичных заметок всех пользователей
-    notes = NoteModel.query.filter(NoteModel.private==False)
+    notes = NoteModel.query.filter((NoteModel.private==False) & (NoteModel.deleted==False))
     return notes, 200
+
+
+@app.route("/notes/deleted", methods=["GET"])
+@multi_auth.login_required
+@doc(summary="Get all notes from archive", description='Get all notes from archive for current auth User', tags=['Notes'])
+@marshal_with(NoteSchema(many=True), code=200)
+@doc(responses={"401": {"description": "Unauthorized"}})
+@doc(security=[{"basicAuth": []}])
+def get_deleted_notes():
+    # авторизованный пользователь получает только свои архивные заметки
+    user = multi_auth.current_user()
+    notes = NoteModel.query.join(NoteModel.author).filter(((UserModel.id==user.id) | (NoteModel.private==False)) & (NoteModel.deleted))
+    return notes, 200
+
+

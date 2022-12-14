@@ -1,8 +1,8 @@
-"""initial
+"""add deleted to NoteModel
 
-Revision ID: 954f9b0cb0c8
+Revision ID: 8365b50048d3
 Revises: 
-Create Date: 2022-12-14 08:01:51.345920
+Create Date: 2022-12-14 13:48:14.820473
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '954f9b0cb0c8'
+revision = '8365b50048d3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -37,6 +37,7 @@ def upgrade():
     sa.Column('author_id', sa.Integer(), nullable=True),
     sa.Column('text', sa.String(length=255), nullable=False),
     sa.Column('private', sa.Boolean(), nullable=False),
+    sa.Column('deleted', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['author_id'], ['user_model.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

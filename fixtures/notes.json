@@ -1,16 +1,46 @@
 {
     "note_model": [
         {
-            "id": 13,
+            "id": 7,
             "author_id": 1,
-            "text": "Loaded 1 quote ...",
-            "private": true
+            "text": "Private note",
+            "private": true,
+            "deleted": false
         },
         {
-            "id": 14,
+            "id": 8,
             "author_id": 1,
-            "text": "Loaded 2 quote ...",
-            "private": false
+            "text": "Public note",
+            "private": false,
+            "deleted": false
+        },
+        {
+            "id": 9,
+            "author_id": 2,
+            "text": "Private note",
+            "private": true,
+            "deleted": false
+        },
+        {
+            "id": 10,
+            "author_id": 2,
+            "text": "Public note",
+            "private": false,
+            "deleted": false
+        },
+        {
+            "id": 11,
+            "author_id": 3,
+            "text": "Private note",
+            "private": true,
+            "deleted": false
+        },
+        {
+            "id": 12,
+            "author_id": 3,
+            "text": "Public note",
+            "private": false,
+            "deleted": false
         }
     ]
 }

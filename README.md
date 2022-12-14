@@ -35,7 +35,9 @@
 | :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | [Список заметок по имени тега](#Список-заметок-по-определенни-тега)     | GET: /notes/filter?tag=<tag_name>                          |
 | :heavy_check_mark: | Low                   |                             | [Публичные заметки по имени автора](#Публичные-заметки-по-имени-автора) | GET: /notes/search?username=<username>                     |
 | :heavy_check_mark: | High                  | ![fa-crown](icons/lock.png) | Редактирование заметки                                                  | PUT: /notes/{id}                                           |
-| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Удаление заметки                                                        | DELETE: /notes/{id}                                        |
+| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Архивирование заметки                                                   | DELETE: /notes/{id}                                        |
+| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Список всех архивных заметок пользователя                               | GET: /notes/deleted                                        |
+| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Восстановление заметки из архива                                        | PUT: /notes/{id}/restore                                   |
 | :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png) | [Добавление тегов заметке](#-Добавление-тегов-к-заметке)                | PUT: /notes/<note_id>/tags \ body: {“tags”: [id1, id2]}    |
 | :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Удаление тегов с заметок                                                | DELETE: /notes/<note_id>/tags \ body: {“tags”: [id1, id2]} |
 |                    |                       |                             | **TAG**                                                                 |                                                            |
@@ -82,9 +84,9 @@
 
 Изменение текста заметки и ее статуса(публичная/частная). Пользователь может редактировать только свои заметки.
 
-## Удаление заметки
+## Архивирование заметки
 
-Удаление заметки из базы. Пользователь может удалять только свои заметки.
+Пользователь может отправить в архив только свои заметки.
 
 ## Создание тегов
 
