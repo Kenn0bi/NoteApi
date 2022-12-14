@@ -17,31 +17,32 @@
 
 # Чек-лист проекта
 
-|      Complete      | [Priority](#Priority) |             Auth             | Task                                                                    | Url                                                        |
-|:------------------:|:----------------------|:----------------------------:|:------------------------------------------------------------------------|:-----------------------------------------------------------|
-|                    |                       |                              | **USER**                                                                |                                                            |
-| :heavy_check_mark: | Base                  |                              | [Регистрация пользователя](#Регистрация-пользователя)                   | POST: /users                                               |
-| :heavy_check_mark: | Base                  |                              | Список пользователей                                                    | GET: /users                                                |
-| :heavy_check_mark: | Base                  |                              | Пользователь по id                                                      | GET: /users/{id}                                           |
-|        :x:         | Medium                | ![fa-crown](icons/lock.png)  | [Авторизация пользователя](#Авторизация-пользователя)                   | GET: /auth/token                                           |
-| :heavy_check_mark: | High                  | ![fa-crown](icons/lock.png)  | Редактирование пользователя                                             | PUT: /users/{id}                                           |
-| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png)  | Удаление пользователя                                                   | DELETE: /users/{id}                                        |
-|                    |                       |                              | **NOTE**                                                                |                                                            |
-| :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png)  | [Создание заметки](#Создание-заметки)                                   | POST: /notes                                               |
-| :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png)  | [Список заметок](#Список-заметок)                                       | GET: /notes                                                |
-| :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png)  | [Заметка по id](#Заметка-по-id)                                         | GET: /notes/{id}                                           |
-|        :x:         | Medium                |                              | [Список всех публичных заметок](#Список-всех-публичных-заметок)         | GET: /notes/public                                         |
-|        :x:         | Medium                | ![fa-crown](icons/lock.png)  | [Список заметок по имени тега](#Список-заметок-по-определенни-тега)     | GET: /notes/filter?tag=<tag_name>                          |
-|        :x:         | Low                   |                              | [Публичные заметки по имени автора](#Публичные-заметки-по-имени-автора) | GET: /notes/filter?username=<username>                     |
-| :heavy_check_mark: | High                  | ![fa-crown](icons/lock.png)  | Редактирование заметки                                                  | PUT: /notes/{id}                                           |
-| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png)  | Удаление заметки                                                        | DELETE: /notes/{id}                                        |
-| :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png)  | [Добавление тегов заметке](#-Добавление-тегов-к-заметке)                | PUT: /notes/<note_id>/tags \ body: {“tags”: [id1, id2]}    |
-|        :x:         | Medium                | ![fa-crown](icons/lock.png)  | Удаление тегов с заметок                                                | DELETE: /notes/<note_id>/tags \ body: {“tags”: [id1, id2]} |
-|                    |                       |                              | **TAG**                                                                 |                                                            |
-| :heavy_check_mark: | Base                  |                              | Создание тега                                                           | POST: /tags                                                |
-| :heavy_check_mark: | Base                  |                              | Список всех тегов                                                       | GET: /tags                                                 |
-|        :x:         | High                  |                              | Редактирование тега                                                     | PUT: /tags/{id}                                            |
-|        :x:         | Medium                |                              | Удаление тега                                                           | DELETE: /tags/{id}                                         |
+|      Complete      | [Priority](#Priority) |            Auth             | Task                                                                    | Url                                                        |
+|:------------------:|:----------------------|:---------------------------:|:------------------------------------------------------------------------|:-----------------------------------------------------------|
+|                    |                       |                             | **USER**                                                                |                                                            |
+| :heavy_check_mark: | Base                  |                             | [Регистрация пользователя](#Регистрация-пользователя)                   | POST: /users                                               |
+| :heavy_check_mark: | Base                  |                             | Список пользователей                                                    | GET: /users                                                |
+| :heavy_check_mark: | Base                  |                             | Пользователь по id                                                      | GET: /users/{id}                                           |
+|        :x:         | Medium                | ![fa-crown](icons/lock.png) | [Авторизация пользователя](#Авторизация-пользователя)                   | GET: /auth/token                                           |
+| :heavy_check_mark: | High                  | ![fa-crown](icons/lock.png) | Редактирование пользователя                                             | PUT: /users/{id}                                           |
+| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Удаление пользователя                                                   | DELETE: /users/{id}                                        |
+| :heavy_check_mark: | Medium                |                             | Список всех заметок пользователя                                        | GET: /users/{id}/notes                                     |
+|                    |                       |                             | **NOTE**                                                                |                                                            |
+| :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png) | [Создание заметки](#Создание-заметки)                                   | POST: /notes                                               |
+| :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png) | [Список заметок](#Список-заметок)                                       | GET: /notes                                                |
+| :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png) | [Заметка по id](#Заметка-по-id)                                         | GET: /notes/{id}                                           |
+| :heavy_check_mark: | Medium                |                             | [Список всех публичных заметок](#Список-всех-публичных-заметок)         | GET: /notes/public                                         |
+| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | [Список заметок по имени тега](#Список-заметок-по-определенни-тега)     | GET: /notes/filter?tag=<tag_name>                          |
+| :heavy_check_mark: | Low                   |                             | [Публичные заметки по имени автора](#Публичные-заметки-по-имени-автора) | GET: /notes/search?username=<username>                     |
+| :heavy_check_mark: | High                  | ![fa-crown](icons/lock.png) | Редактирование заметки                                                  | PUT: /notes/{id}                                           |
+| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Удаление заметки                                                        | DELETE: /notes/{id}                                        |
+| :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png) | [Добавление тегов заметке](#-Добавление-тегов-к-заметке)                | PUT: /notes/<note_id>/tags \ body: {“tags”: [id1, id2]}    |
+| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Удаление тегов с заметок                                                | DELETE: /notes/<note_id>/tags \ body: {“tags”: [id1, id2]} |
+|                    |                       |                             | **TAG**                                                                 |                                                            |
+| :heavy_check_mark: | Base                  |                             | Создание тега                                                           | POST: /tags                                                |
+| :heavy_check_mark: | Base                  |                             | Список всех тегов                                                       | GET: /tags                                                 |
+| :heavy_check_mark: | High                  |                             | Редактирование тега                                                     | PUT: /tags/{id}                                            |
+|        :x:         | Medium                |                             | Удаление тега                                                           | DELETE: /tags/{id}                                         |
 
 ## Регистрация пользователя
 

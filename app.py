@@ -23,12 +23,17 @@ docs.register(note.get_notes)
 docs.register(note.create_note)
 docs.register(note.edit_note)
 docs.register(note.delete_note)
+docs.register(note.get_user_notes_by_tag)
+docs.register(note.get_user_public_notes)
+docs.register(note.note_add_tags)
+docs.register(note.note_delete_tags)
+docs.register(note.get_all_public_notes)
 
 # TAGS
 docs.register(tag.get_tag_by_id)
 docs.register(tag.get_tags)
 docs.register(tag.create_tag)
-docs.register(tag.note_add_tags)
+docs.register(tag.edit_tag)
 
 if __name__ == '__main__':
     app.run(debug=Config.DEBUG, port=Config.PORT)

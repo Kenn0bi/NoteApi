@@ -1,8 +1,22 @@
 {
+    "tag": [
+        {
+            "id": 1,
+            "name": "pets"
+        },
+        {
+            "id": 2,
+            "name": "books"
+        },
+        {
+            "id": 3,
+            "name": "fruits"
+        }
+    ],
     "user_model": [
         {
             "id": 1,
-            "username": "admin",
+            "username": "ADMIN",
             "password_hash": "$6$rounds=656000$/WMAC.nHtLbkadBs$YUvfUf5GonPz2MKPZnTqEGeQfRfE1SY94.axFKFKlTkt01pFZJ4sLcg6GlcROGM2yq0TGRUbGy2ZMIB/areDd.",
             "role": "admin"
         },
@@ -23,7 +37,7 @@
         {
             "id": 2,
             "author_id": 1,
-            "text": "One more quote ...",
+            "text": "Заметка за 13.12.2022",
             "private": true
         },
         {

@@ -40,18 +40,17 @@ def create_tag(**kwargs):
         return "Tag must be unique", 400
     return tag, 201
 
-@app.route("/notes/<int:note_id>/tags", methods=["PUT"])
-@doc(summary="Set tags to Note", description='Set tags to Note', tags=['Notes'])
-@marshal_with(NoteSchema, code=200)
-@use_kwargs({"tags_id": fields.List(fields.Int())}, location=('json'))
-@doc(responses={"404": {"description": "Not found"}})
-def note_add_tags(note_id, **kwargs):
-    print(kwargs['tags_id'])
-    note = get_object_or_404(NoteModel, note_id)
-    for id in kwargs['tags_id']:
-        tag = get_object_or_404(TagModel, id)
-        note.tags.append(tag)
-        # db.session.commit()
-    note.save()
 
-    return note, 200
+@app.route("/tags/<int:tag_id>", methods=["PUT"])
+@doc(summary="Edit tag by id", description='Edit tag by id', tags=['Tags'])
+@marshal_with(TagSchema, code=200)
+@use_kwargs(TagRequestSchema, location='json')
+@doc(responses={"400": {"description": "Bad request"}})
+def edit_tag(tag_id, **kwargs):
+    tag = get_object_or_404(TagModel, tag_id)
+    try:
+        tag.name = kwargs['name']
+        tag.save()
+    except IntegrityError:
+        return "Tag must be unique", 400
+    return tag, 200
