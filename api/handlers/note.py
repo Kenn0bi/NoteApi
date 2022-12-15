@@ -112,22 +112,21 @@ def restore_note(note_id):
     abort(403, description=f"Forbidden")
 
 
-@app.route("/notes/filter", methods=["GET"])
+@app.route("/notes/filter/tag", methods=["GET"])
 @multi_auth.login_required
 @doc(summary="Get auth user notes by tags", description='Get auth user notes by tags', tags=['Notes'])
 @marshal_with(NoteSchema(many=True), code=200)
 @doc(responses={"401": {"description": "Unauthorized"}})
 @doc(security=[{"basicAuth": []}])
-@use_kwargs({"tag": fields.Str()}, location=('query'))
+@use_kwargs({"name": fields.Str()}, location=('query'))
 def get_user_notes_by_tag(**kwargs):
     # авторизованный пользователь получает только свои заметки с указанным тегом
     user = multi_auth.current_user()
-    # notes = NoteModel.query.filter((NoteModel.author_id==user.id) & (NoteModel.tags.any(name=kwargs['tag']) ))
-    notes = NoteModel.query.filter((NoteModel.deleted==False) & (NoteModel.author_id==user.id) & (NoteModel.tags.any(name=kwargs['tag'])))
+    notes = NoteModel.query.filter((NoteModel.deleted==False) & (NoteModel.author_id==user.id) & (NoteModel.tags.any(name=kwargs['name'])))
     return notes, 200
 
 
-@app.route("/notes/search", methods=["GET"])
+@app.route("/notes/filter/user", methods=["GET"])
 @doc(summary="Get public notes by username", description='Get public notes by username', tags=['Notes'])
 @marshal_with(NoteSchema(many=True), code=200)
 @use_kwargs({"username": fields.Str()}, location=('query'))

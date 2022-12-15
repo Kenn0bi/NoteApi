@@ -45,6 +45,7 @@ def create_tag(**kwargs):
 @doc(summary="Edit tag by id", description='Edit tag by id', tags=['Tags'])
 @marshal_with(TagSchema, code=200)
 @use_kwargs(TagRequestSchema, location='json')
+@doc(responses={"404": {"description": "Not found"}})
 @doc(responses={"400": {"description": "Bad request"}})
 def edit_tag(tag_id, **kwargs):
     tag = get_object_or_404(TagModel, tag_id)
@@ -54,3 +55,17 @@ def edit_tag(tag_id, **kwargs):
     except IntegrityError:
         return "Tag must be unique", 400
     return tag, 200
+
+
+@app.route("/tags/<int:tag_id>", methods=["DELETE"])
+@doc(summary="Delete tag by id", description='Delete tag by id', tags=['Tags'])
+@doc(responses={"404": {"description": "Not found"}})
+def delete_tag(tag_id):
+    tag = get_object_or_404(TagModel, tag_id)
+    # delete tag from notes
+    notes = NoteModel.query.filter(NoteModel.tags.any(id=tag_id))
+    for note in notes:
+        note.tags.remove(tag)
+    # delete tag
+    tag.delete()
+    return '', 204

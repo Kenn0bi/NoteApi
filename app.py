@@ -36,6 +36,7 @@ docs.register(tag.get_tag_by_id)
 docs.register(tag.get_tags)
 docs.register(tag.create_tag)
 docs.register(tag.edit_tag)
+docs.register(tag.delete_tag)
 
 if __name__ == '__main__':
     app.run(debug=Config.DEBUG, port=Config.PORT)

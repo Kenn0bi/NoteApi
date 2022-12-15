@@ -10,10 +10,12 @@ from flask_apispec.extension import FlaskApiSpec
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
 docs = FlaskApiSpec(app)
+# print(docs.__doc__)
 basic_auth = HTTPBasicAuth()
 token_auth = HTTPTokenAuth('Bearer')
 multi_auth = MultiAuth(basic_auth, token_auth)

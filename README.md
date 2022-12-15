@@ -32,8 +32,8 @@
 | :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png) | [Список заметок](#Список-заметок)                                       | GET: /notes                                                |
 | :heavy_check_mark: | Base                  | ![fa-crown](icons/lock.png) | [Заметка по id](#Заметка-по-id)                                         | GET: /notes/{id}                                           |
 | :heavy_check_mark: | Medium                |                             | [Список всех публичных заметок](#Список-всех-публичных-заметок)         | GET: /notes/public                                         |
-| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | [Список заметок по имени тега](#Список-заметок-по-определенни-тега)     | GET: /notes/filter?tag=<tag_name>                          |
-| :heavy_check_mark: | Low                   |                             | [Публичные заметки по имени автора](#Публичные-заметки-по-имени-автора) | GET: /notes/search?username=<username>                     |
+| :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | [Список заметок по имени тега](#Список-заметок-по-определенни-тега)     | GET: /notes/filter/tag?name=<tag_name>                     |
+| :heavy_check_mark: | Low                   |                             | [Публичные заметки по имени автора](#Публичные-заметки-по-имени-автора) | GET: /notes/filter/user?username=<username>                |
 | :heavy_check_mark: | High                  | ![fa-crown](icons/lock.png) | Редактирование заметки                                                  | PUT: /notes/{id}                                           |
 | :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Архивирование заметки                                                   | DELETE: /notes/{id}                                        |
 | :heavy_check_mark: | Medium                | ![fa-crown](icons/lock.png) | Список всех архивных заметок пользователя                               | GET: /notes/deleted                                        |
@@ -44,7 +44,7 @@
 | :heavy_check_mark: | Base                  |                             | Создание тега                                                           | POST: /tags                                                |
 | :heavy_check_mark: | Base                  |                             | Список всех тегов                                                       | GET: /tags                                                 |
 | :heavy_check_mark: | High                  |                             | Редактирование тега                                                     | PUT: /tags/{id}                                            |
-|        :x:         | Medium                |                             | Удаление тега                                                           | DELETE: /tags/{id}                                         |
+| :heavy_check_mark: | Medium                |                             | Удаление тега                                                           | DELETE: /tags/{id}                                         |
 
 ## Регистрация пользователя
 
