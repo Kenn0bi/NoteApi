@@ -26,6 +26,25 @@ def get_note_by_id(note_id):
         return note, 200
     return '', 403
 
+@app.route("/notes/<int:note_id>/importance", methods=["PUT"])
+@multi_auth.login_required
+@doc(summary="Change importance of note by id", description='Change importance of note by id for current auth User', tags=['Notes'])
+@doc(responses={"401": {"description": "Unauthorized"}})
+@doc(responses={"404": {"description": "Not found"}})
+@doc(responses={"403": {"description": "Forbidden"}})
+@doc(security=[{"basicAuth": []}])
+def change_note_importance(note_id):
+    #  авторизованный пользователь может получить только свою заметку или публичную заметку других пользователей
+    #  Попытка получить чужую приватную заметку, возвращает ответ с кодом 403
+    user = multi_auth.current_user()
+    note = get_object_or_404(NoteModel, note_id)
+    if note.author_id == user.id:
+        note.importance %= 3
+        note.importance += 1
+        note.save()
+        return '', 204
+    return '', 403
+
 @app.route("/notes", methods=["GET", "OPTIONS"])
 @multi_auth.login_required
 @doc(summary="Get notes", description='Get notes for current auth User or other public notes', tags=['Notes'])

@@ -1,8 +1,8 @@
-"""s
+"""add importance
 
-Revision ID: c738c69f5681
+Revision ID: 97536f30a8c6
 Revises: 
-Create Date: 2022-12-16 19:20:39.572863
+Create Date: 2022-12-16 21:08:31.019775
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c738c69f5681'
+revision = '97536f30a8c6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,6 +35,7 @@ def upgrade():
     op.create_table('note_model',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('author_id', sa.Integer(), nullable=True),
+    sa.Column('importance', sa.Integer(), nullable=False),
     sa.Column('text', sa.String(length=255), nullable=False),
     sa.Column('private', sa.Boolean(), nullable=False),
     sa.Column('deleted', sa.Boolean(), nullable=False),

@@ -34,6 +34,8 @@ docs.register(note.note_add_tags)
 docs.register(note.note_delete_tags)
 docs.register(note.get_all_public_notes)
 docs.register(note.get_deleted_notes)
+docs.register(note.change_note_importance)
+
 
 # TAGS
 docs.register(tag.get_tag_by_id)

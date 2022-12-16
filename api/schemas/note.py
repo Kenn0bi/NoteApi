@@ -14,6 +14,7 @@ class NoteSchema(ma.SQLAlchemySchema):
     id = ma.auto_field()
     text = ma.auto_field()
     private = ma.auto_field()
+    importance = ma.auto_field()
     author = ma.Nested(UserSchema())
     tags = ma.Nested(TagSchema(many=True))
 
