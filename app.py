@@ -1,4 +1,7 @@
-from api import app, docs
+from api import app, docs, db
+from api.models.note import NoteModel
+from api.models.user import UserModel
+from api.models.note import TagModel
 from config import Config
 from api.handlers import auth, note, user, tag, file
 from flask import render_template, send_from_directory
@@ -43,8 +46,11 @@ docs.register(tag.delete_tag)
 docs.register(file.upload_file)
 docs.register(file.download_file)
 
-# FILE
-# docs.register(file.put)
+
+@app.shell_context_processor
+def make_shell_context():
+   return {'db': db, 'NoteModel': NoteModel, 'UserModel': UserModel, 'TagModel': TagModel}
+
 
 if __name__ == '__main__':
     app.run(debug=Config.DEBUG, port=Config.PORT)

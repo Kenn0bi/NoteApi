@@ -16,6 +16,7 @@ Flask-HTTPAuth==4.2.0
 flask-marshmallow==0.14.0
 Flask-Migrate==3.1.0
 Flask-RESTful==0.3.9
+flask-shell-ipython==0.4.1
 Flask-SQLAlchemy==2.5.1
 greenlet==2.0.1
 importlib-metadata==5.1.0

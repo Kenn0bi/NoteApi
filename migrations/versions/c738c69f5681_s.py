@@ -1,8 +1,8 @@
-"""add deleted to NoteModel
+"""s
 
-Revision ID: 8365b50048d3
+Revision ID: c738c69f5681
 Revises: 
-Create Date: 2022-12-14 13:48:14.820473
+Create Date: 2022-12-16 19:20:39.572863
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8365b50048d3'
+revision = 'c738c69f5681'
 down_revision = None
 branch_labels = None
 depends_on = None
