@@ -1,7 +1,6 @@
 from pathlib import Path
 from apispec import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
-import os
 
 BASE_DIR = Path(__file__).parent
 
@@ -31,6 +30,6 @@ class Config:
     APISPEC_SWAGGER_UI_URL = '/swagger-ui'
     LANGUAGES = ['en', 'ru']
     UPLOAD_FOLDER_NAME = 'upload'
-    UPLOAD_FOLDER = os.path.join(BASE_DIR, UPLOAD_FOLDER_NAME)
+    UPLOAD_FOLDER = BASE_DIR / UPLOAD_FOLDER_NAME
 
 

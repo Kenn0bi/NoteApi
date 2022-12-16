@@ -3,10 +3,6 @@ from config import Config
 from api.handlers import auth, note, user, tag, file
 from flask import render_template, send_from_directory
 
-@app.route('/uploads/<path:filename>')
-def download_file(filename):
-   return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
-
 # CRUD
 
 # Create --> POST
@@ -43,7 +39,9 @@ docs.register(tag.create_tag)
 docs.register(tag.edit_tag)
 docs.register(tag.delete_tag)
 
-docs.register(file.put)
+# FILES
+docs.register(file.upload_file)
+docs.register(file.download_file)
 
 # FILE
 # docs.register(file.put)
