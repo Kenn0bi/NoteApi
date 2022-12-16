@@ -26,8 +26,7 @@ def get_note_by_id(note_id):
         return note, 200
     return '', 403
 
-
-@app.route("/notes", methods=["GET"])
+@app.route("/notes", methods=["GET", "OPTIONS"])
 @multi_auth.login_required
 @doc(summary="Get notes", description='Get notes for current auth User or other public notes', tags=['Notes'])
 @marshal_with(NoteSchema(many=True), code=200)
@@ -38,7 +37,6 @@ def get_notes():
     user = multi_auth.current_user()
     notes = NoteModel.query.join(NoteModel.author).filter(((UserModel.id==user.id) | (NoteModel.private==False)) & (NoteModel.deleted==False))
     return notes, 200
-
 
 @app.route("/notes", methods=["POST"])
 @multi_auth.login_required
